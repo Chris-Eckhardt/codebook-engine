@@ -130,3 +130,6 @@ dmypy.json
 
 # output files
 output/*
+
+# asset files
+assets/*
