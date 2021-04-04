@@ -1,5 +1,4 @@
 import cv2
-import os
 from codebook_engine.frame_manager import FrameManager
 from codebook_engine.codebook import Codebook
 
@@ -17,7 +16,6 @@ class CodebookEngine:
     cw_created = 0
 
     def __init__(self, path):
-        print(os.getcwd())
         self.fm = FrameManager(self.path_to_assets + path)
         self.mnrl_threshold = self.fm.num_of_frames / 2
 
