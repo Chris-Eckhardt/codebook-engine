@@ -3,8 +3,8 @@ import math
 
 class Codebook(object):
 
-    alpha = 0.6  # between 0.4 and 0.7
-    beta = 1.1  # between 1.1 and 1.5
+    alpha = 0.4  # between 0.4 and 0.7
+    beta = 1.5  # between 1.1 and 1.5
 
     def __init__(self):
         self.codewords = []

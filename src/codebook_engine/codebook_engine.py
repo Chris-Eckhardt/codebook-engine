@@ -31,7 +31,6 @@ class CodebookEngine:
     def build_codebooks(self):
         t = 1
         while self.fm.get_next_frame():
-            print(t)
             for y in range(0, self.fm.frame_height-1):
                 for x in range(0, self.fm.frame_width-1):
                     pixel = self.fm.frame[y][x]
@@ -60,7 +59,6 @@ class CodebookEngine:
             (self.fm.frame_width, self.fm.frame_height)
         )
         while self.fm.get_next_frame():
-            print(t)
             for y in range(0, self.fm.frame_height-1):
                 for x in range(0, self.fm.frame_width-1):
                     pixel = self.fm.frame[y][x]
