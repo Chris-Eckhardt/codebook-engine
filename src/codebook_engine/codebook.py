@@ -3,11 +3,10 @@ import math
 
 class Codebook(object):
 
-    alpha = 0.4  # between 0.4 and 0.7
-    beta = 1.5  # between 1.1 and 1.5
-
-    def __init__(self):
+    def __init__(self, alpha, beta):
         self.codewords = []
+        self.alpha = alpha
+        self.beta = beta
 
     def process_pixel(self, pixel, t):
         for cw in self.codewords:

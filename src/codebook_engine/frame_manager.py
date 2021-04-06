@@ -8,6 +8,7 @@ class FrameManager(object):
     frame = None
     width = 0
     height = 0
+    out = None
 
     def __init__(self, path):
         print(' * using: "{}"'.format(path))
@@ -45,6 +46,22 @@ class FrameManager(object):
         self.cap.release()
         cv2.destroyAllWindows()
 
+    def output_init(self, filename):
+        self.out = cv2.VideoWriter(
+            filename+'.avi',
+            cv2.VideoWriter_fourcc(*'DIVX'),
+            20.0,
+            (self.frame_width, self.frame_height)
+        )
+
+    def output_write_frame(self):
+        self.out.write(self.frame)
+
+    def output_release(self):
+        self.out.release()
+
     def __del__(self):
+        if self.out is not None:
+            self.out.release()
         self.cap.release()
         cv2.destroyAllWindows()
