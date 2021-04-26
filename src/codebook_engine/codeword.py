@@ -13,11 +13,27 @@ class Codeword:
     _first_access = None
     _last_access = None
 
-    def __init__(self):
-        pass
+    def __init__(self, rep=''):
+        if rep != '':
+            two = rep.split('-')
+            rgb = two[0]
+            spec = two[1]
+            rgb = rgb.strip('()')
+            spec = spec.strip('()')
+            rgb = rgb.split(',')
+            spec = spec.split(',')
+            self._r = int(rgb[0])
+            self._g = int(rgb[1])
+            self._b = int(rgb[2])
+            self._min_brightness = int(spec[0])
+            self._max_brightness = int(spec[1])
+            self._freq = int(spec[2])
+            self._lambda = int(spec[3])
+            self._first_access = int(spec[4])
+            self._last_access = int(spec[5])
 
     def __repr__(self):
-        return '[{},{},{}] - [{},{},{},{},{},{}]'.format(
+        return '({},{},{})-({},{},{},{},{},{})'.format(
             self.red(), self.green(), self.blue(), self.min_brightness(), self.max_brightness(),
             self.freq(), self.lam(), self.first_access(), self.last_access())
 
@@ -26,6 +42,8 @@ class Codeword:
             return True
         else:
             return False
+
+
 
     ########################################
     #         GETTERS AND SETTERS          #

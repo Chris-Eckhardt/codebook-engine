@@ -8,6 +8,7 @@ class CodebookEngine:
 
     path_to_assets = 'assets/'
     path_to_output = 'output/'
+    path_to_models = 'models/'
 
     black = [0, 0, 0]
     white = [255, 255, 255]
@@ -16,7 +17,7 @@ class CodebookEngine:
 
     cw_created = 0
 
-    def __init__(self, path, alpha=0.4, beta=1.5):
+    def __init__(self, path, alpha, beta):
         self.fm = FrameManager(self.path_to_assets + path)
         self.mnrl_threshold = self.fm.num_of_frames / 2
         self.alpha = alpha # between 0.4 and 0.7
@@ -43,6 +44,14 @@ class CodebookEngine:
         self.fm.reset()
         print(' * built codebooks')
 
+    def clean_lambdas(self):
+        for y in range(0, self.fm.frame_height-1):
+            for x in range(0, self.fm.frame_width-1):
+                cb = self.data[y][x]
+                for cw in cb.codewords:
+                    cw.lam( max( cw.lam(), (self.fm.num_of_frames-cw.first_access()+cw.last_access()-1) ) )
+        print(' * cleaned lambdas')
+
     def temporal_filtering(self):
         for y in range(0, self.fm.frame_height-1):
             for x in range(0, self.fm.frame_width-1):
@@ -52,15 +61,30 @@ class CodebookEngine:
                         cw_list.remove(cw)
         print(' * temporal filtering complete')
 
-    def build_output_file(self):
+    def save_model(self):
+        with open( '{}{}_model.txt'.format(self.path_to_models, datetime.date.today()), 'w') as fd:
+            fd.write(str(self.fm.frame_height) + '\n')
+            fd.write(str(self.fm.frame_width) + '\n')
+            for y in range(0, self.fm.frame_height-1):
+                for x in range(0, self.fm.frame_width-1):
+                    cw_list = self.data[y][x].codewords
+                    fd.write(str(cw_list))
+                fd.write('\n-----------\n')
+            fd.write('\n-- eof')
+
+    def load_model(self, path):
+        pass
+
+    def build_output_file(self, path=''):
+        self.fm = FrameManager(self.path_to_assets + path)
         t = 1
-        self.fm.output_init(self.path_to_output+'{}-a{}-b{}'.format(datetime.datetime.now(), self.alpha, self.beta))
+        self.fm.output_init(self.path_to_output+'{}-a{}-b{}'.format(datetime.date.today(), self.alpha, self.beta))
         while self.fm.get_next_frame():
             for y in range(0, self.fm.frame_height-1):
                 for x in range(0, self.fm.frame_width-1):
                     pixel = self.fm.frame[y][x]
-                    cw = self.data[y][x]
-                    if cw.bgd(pixel):
+                    cb = self.data[y][x]
+                    if cb.bgd(pixel):
                         self.fm.frame[y][x] = self.black
                     else:
                         self.fm.frame[y][x] = self.white
@@ -69,7 +93,3 @@ class CodebookEngine:
         self.fm.output_release()
         self.fm.cap.release()
         print(' * output file built')
-
-
-
-
