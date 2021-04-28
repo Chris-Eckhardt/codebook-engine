@@ -1,7 +1,10 @@
 import cv2
+import json
 import datetime
 from codebook_engine.frame_manager import FrameManager
 from codebook_engine.codebook import Codebook
+from codebook_engine.model import Model
+from codebook_engine.codeword import Codeword
 
 
 class CodebookEngine:
@@ -17,8 +20,8 @@ class CodebookEngine:
 
     cw_created = 0
 
-    def __init__(self, path, alpha, beta):
-        self.fm = FrameManager(self.path_to_assets + path)
+    def __init__(self, source, alpha, beta):
+        self.fm = FrameManager(self.path_to_assets + source)
         self.mnrl_threshold = self.fm.num_of_frames / 2
         self.alpha = alpha # between 0.4 and 0.7
         self.beta = beta # between 1.1 and 1.5
@@ -61,19 +64,38 @@ class CodebookEngine:
                         cw_list.remove(cw)
         print(' * temporal filtering complete')
 
-    def save_model(self):
-        with open( '{}{}_model.txt'.format(self.path_to_models, datetime.date.today()), 'w') as fd:
-            fd.write(str(self.fm.frame_height) + '\n')
-            fd.write(str(self.fm.frame_width) + '\n')
-            for y in range(0, self.fm.frame_height-1):
-                for x in range(0, self.fm.frame_width-1):
-                    cw_list = self.data[y][x].codewords
-                    fd.write(str(cw_list))
-                fd.write('\n-----------\n')
-            fd.write('\n-- eof')
+    def save_model(self, name):
+        data = self.convert_data()
+        model = Model(name=name, height=self.fm.frame_width, width=self.fm.frame_width, data=data)
+        j_model = json.dumps(model.__dict__)
+        with open( '{}{}.json'.format(self.path_to_models, name), 'w') as fd:
+            fd.write(j_model)
+        print(' * model [{}.json] was successfully created.'.format(name))
 
-    def load_model(self, path):
-        pass
+    def convert_data(self):
+        d = []
+        for y in range(0, self.fm.frame_height-1):
+            for x in range(0, self.fm.frame_width-1):
+                cb = self.data[y][x]
+                temp = cb.get_cw_as_list()
+            d.append(temp)
+        return d
+
+    def load_model(self, source):
+        with open(self.path_to_models + source, 'r') as json_file:
+            i = json.load(json_file)
+            self.data = []
+            for y in range(0, int(i['height'])-1):
+                temp = []
+                for x in range(0, int(i['width'])-1):
+                    cb = Codebook()
+                    temp.append(cb)
+                self.data.append(temp)
+            for y in range(0, int(i['height'])-1):
+                for x in range(0, int(i['width'])-1):
+                    for v in i['data'][y]:
+                        self.data[y][x]
+            
 
     def build_output_file(self, path=''):
         self.fm = FrameManager(self.path_to_assets + path)

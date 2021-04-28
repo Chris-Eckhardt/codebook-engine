@@ -3,7 +3,7 @@ import math
 
 class Codebook(object):
 
-    def __init__(self, alpha, beta):
+    def __init__(self, alpha=0.7, beta=1.1):
         self.codewords = []
         self.alpha = alpha
         self.beta = beta
@@ -68,3 +68,7 @@ class Codebook(object):
             if self.is_match(cw, pixel):
                 return True
         return False
+
+    def get_cw_as_list(self):
+        li = [x.__repr__() for x in self.codewords]
+        return li

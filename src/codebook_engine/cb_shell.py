@@ -1,5 +1,5 @@
 import uuid
-
+from codebook_engine.codebook_engine import CodebookEngine
 
 
 class CbShell(object):
@@ -35,14 +35,20 @@ class CbShell(object):
 
     def execute(self, exe):
         if exe.cmd == 'train':
-            pass
+            cbe = CodebookEngine(source=exe.source, alpha=exe.alpha, beta=exe.beta)
+            cbe.init_codebooks()
+            cbe.build_codebooks()
+            cbe.clean_lambdas()
+            cbe.temporal_filtering()
+            cbe.save_model(source=exe.name)
         elif exe.cmd == 'separate':
             pass
 
     def build_training_exe(self, li):
         index = 1
         exe = RunConfig()
-        while index <= len(li):
+        exe.cmd = 'train'
+        while index < len(li):
             if li[index] == '--source':
                 if index+1 >= len(li):
                     print(' * missing parameter value for [--source], please provide a value for this parameter')
@@ -62,7 +68,7 @@ class CbShell(object):
                 if index+1 >= len(li):
                     print(' * missing parameter value for [--name], please provide a value for this parameter, or omit')
                 else:
-                    exe.alpha = li[index+1]
+                    exe.beta = li[index+1]
             else:
                 print(' * invalid parameter: [{}]'.format(li[index]))
                 break
@@ -78,6 +84,7 @@ class CbShell(object):
     def build_separate_exe(self, li):
         index = 1
         exe = RunConfig()
+        exe.cmd = 'separate'
         while index <= len(li):
             if li[index] == '--source':
                 if index+1 >= len(li):

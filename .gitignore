@@ -129,7 +129,7 @@ dmypy.json
 .pyre/
 
 # output files
-output/*
+output/*.avi
 
 # asset files
-assets/*
+assets/*.MOV
