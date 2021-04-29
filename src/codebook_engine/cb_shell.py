@@ -40,9 +40,12 @@ class CbShell(object):
             cbe.build_codebooks()
             cbe.clean_lambdas()
             cbe.temporal_filtering()
-            cbe.save_model(source=exe.name)
+            # cbe.count_non_singltons() # for debug
+            cbe.save_model(name=exe.name)
         elif exe.cmd == 'separate':
-            pass
+            cbe.CodebookEngine(source=exe.source, alpha=exe.alpha, beta=exe.beta)
+            cbe.load_model()
+            cbe.build_output_file()
 
     def build_training_exe(self, li):
         index = 1
