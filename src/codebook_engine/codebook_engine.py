@@ -107,14 +107,17 @@ class CodebookEngine:
                 self.data.append(temp)
             for y in range(0, int(i['height'])-1):
                 for x in range(0, int(i['width'])-1):
-                    for v in i['data'][y]:
-                        print(i['data'])
+                    cb = self.data[y][x]
+                    for v in i['data'][y][x]:
+                        cb.codewords.append(Codeword(v))
+        print(' * model loaded : {}'.format(source))
+                        
             
 
-    def build_output_file(self, path='', name=''):
-        self.fm = FrameManager(self.path_to_assets + path)
+    def build_output_file(self, source='', out=''):
+        self.fm = FrameManager(self.path_to_assets + source)
         t = 1
-        self.fm.output_init(self.path_to_output + name)
+        self.fm.output_init(self.path_to_output + out)
         while self.fm.get_next_frame():
             for y in range(0, self.fm.frame_height-1):
                 for x in range(0, self.fm.frame_width-1):

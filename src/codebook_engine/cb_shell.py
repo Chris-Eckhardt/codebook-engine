@@ -43,9 +43,9 @@ class CbShell(object):
             # cbe.count_non_singltons() # for debug
             cbe.save_model(name=exe.name)
         elif exe.cmd == 'separate':
-            cbe.CodebookEngine(source=exe.source, alpha=exe.alpha, beta=exe.beta)
-            cbe.load_model()
-            cbe.build_output_file()
+            cbe = CodebookEngine(source=exe.source, alpha=exe.alpha, beta=exe.beta)
+            cbe.load_model(source=exe.model)
+            cbe.build_output_file(source=exe.source, out=exe.out)
 
     def build_training_exe(self, li):
         index = 1
@@ -88,7 +88,7 @@ class CbShell(object):
         index = 1
         exe = RunConfig()
         exe.cmd = 'separate'
-        while index <= len(li):
+        while index < len(li):
             if li[index] == '--source':
                 if index+1 >= len(li):
                     print(' * missing parameter value for [--source], please provide a value for this parameter')
@@ -104,6 +104,20 @@ class CbShell(object):
                     print(' * missing parameter value for [--out], please provide a value for this parameter')
                 else:
                     exe.out = li[index+1]
+            else:
+                print(' * invalid parameter: [{}]'.format(li[index]))
+                break
+            index+=2
+        if exe.source == '':
+            print(' * missing required parameter [--source]')
+            return
+        if exe.out == '':
+            print(' * missing required parameter [--out]')
+            return
+        if exe.model == '':
+            print(' * missing required parameter [--model]')
+            return
+        return exe
 
     def print_help(self):
         print('\n * commands:')
@@ -133,7 +147,7 @@ class CbShell(object):
 class RunConfig(object):
 
     cmd = ''
-    name = str(uuid.uuid1()) + '.model'
+    name = str(uuid.uuid1())
     source = ''
     model = ''
     alpha = 0.7
