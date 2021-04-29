@@ -76,7 +76,7 @@ class CodebookEngine:
 
     def save_model(self, name):
         data = self.convert_data()
-        model = Model(name=name, height=self.fm.frame_width, width=self.fm.frame_width, data=data)
+        model = Model(name=name, height=self.fm.frame_height, width=self.fm.frame_width, data=data)
         j_model = json.dumps(model.__dict__)
         with open( '{}{}.json'.format(self.path_to_models, name), 'w') as fd:
             fd.write(j_model)
