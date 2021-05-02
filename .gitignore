@@ -133,3 +133,6 @@ output/*.avi
 
 # asset files
 assets/*.MOV
+
+# models
+models/*.json
