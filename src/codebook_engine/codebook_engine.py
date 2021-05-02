@@ -9,10 +9,6 @@ from codebook_engine.codeword import Codeword
 
 class CodebookEngine:
 
-    path_to_assets = 'assets/'
-    path_to_output = 'output/'
-    path_to_models = 'models/'
-
     black = [0, 0, 0]
     white = [255, 255, 255]
 
@@ -20,9 +16,12 @@ class CodebookEngine:
 
     cw_created = 0
 
-    def __init__(self, source='', alpha=0.7, beta=1.1):
+    def __init__(self):
+        pass
+
+    def init_frame_manager(self, source, alpha=0.7, beta=1.1):
         if source != '':
-            self.fm = FrameManager(self.path_to_assets + source)
+            self.fm = FrameManager(source)
         self.mnrl_threshold = self.fm.num_of_frames / 2
         self.alpha = alpha # between 0.4 and 0.7
         self.beta = beta # between 1.1 and 1.5
@@ -76,9 +75,9 @@ class CodebookEngine:
 
     def save_model(self, name):
         data = self.convert_data()
-        model = Model(name=name, height=self.fm.frame_height, width=self.fm.frame_width, data=data)
+        model = Model(name=name,alpha=self.alpha, beta=self.beta, height=self.fm.frame_height, width=self.fm.frame_width, data=data)
         j_model = json.dumps(model.__dict__)
-        with open( '{}{}.json'.format(self.path_to_models, name), 'w') as fd:
+        with open( '{}.json'.format(name), 'w') as fd:
             fd.write(j_model)
         print(' * model [{}.json] was successfully created.'.format(name))
 
@@ -96,7 +95,7 @@ class CodebookEngine:
         return a
 
     def load_model(self, source):
-        with open(self.path_to_models + source, 'r') as json_file:
+        with open(source, 'r') as json_file:
             i = json.load(json_file)
             self.data = []
             for y in range(0, int(i['height'])-1):
@@ -112,12 +111,9 @@ class CodebookEngine:
                         cb.codewords.append(Codeword(v))
         print(' * model loaded : {}'.format(source))
                         
-            
-
     def build_output_file(self, source='', out=''):
-        self.fm = FrameManager(self.path_to_assets + source)
         t = 1
-        self.fm.output_init(self.path_to_output + out)
+        self.fm.output_init(out)
         while self.fm.get_next_frame():
             for y in range(0, self.fm.frame_height-1):
                 for x in range(0, self.fm.frame_width-1):

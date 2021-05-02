@@ -3,6 +3,10 @@ from codebook_engine.codebook_engine import CodebookEngine
 
 
 class CbShell(object):
+
+    path_to_assets = 'assets/'
+    path_to_output = 'output/'
+    path_to_models = 'models/'
     
     _running = False
 
@@ -35,17 +39,19 @@ class CbShell(object):
 
     def execute(self, exe):
         if exe.cmd == 'train':
-            cbe = CodebookEngine(source=exe.source, alpha=exe.alpha, beta=exe.beta)
+            cbe = CodebookEngine()
+            cbe.init_frame_manager(source=self.path_to_assets+exe.source, alpha=exe.alpha, beta=exe.beta)
             cbe.init_codebooks()
             cbe.build_codebooks()
             cbe.clean_lambdas()
             cbe.temporal_filtering()
             # cbe.count_non_singltons() # for debug
-            cbe.save_model(name=exe.name)
+            cbe.save_model(name=self.path_to_models+exe.name)
         elif exe.cmd == 'separate':
-            cbe = CodebookEngine(source=exe.source, alpha=exe.alpha, beta=exe.beta)
-            cbe.load_model(source=exe.model)
-            cbe.build_output_file(source=exe.source, out=exe.out)
+            cbe = CodebookEngine()
+            cbe.init_frame_manager(source=self.path_to_assets+exe.source, alpha=exe.alpha, beta=exe.beta)
+            cbe.load_model(source=self.path_to_models+exe.model)
+            cbe.build_output_file(source=exe.source, out=self.path_to_output+exe.out)
 
     def build_training_exe(self, li):
         index = 1
@@ -64,14 +70,14 @@ class CbShell(object):
                     exe.name = li[index+1]
             elif li[index] == '--alpha':
                 if index+1 >= len(li):
-                    print(' * missing parameter value for [--name], please provide a value for this parameter, or omit')
+                    print(' * missing parameter value for [--alpha], please provide a value for this parameter, or omit')
                 else:
-                    exe.alpha = li[index+1]
+                    exe.alpha = float(li[index+1])
             elif li[index] == '--beta':
                 if index+1 >= len(li):
-                    print(' * missing parameter value for [--name], please provide a value for this parameter, or omit')
+                    print(' * missing parameter value for [--beta], please provide a value for this parameter, or omit')
                 else:
-                    exe.beta = li[index+1]
+                    exe.beta = float(li[index+1])
             else:
                 print(' * invalid parameter: [{}]'.format(li[index]))
                 break
