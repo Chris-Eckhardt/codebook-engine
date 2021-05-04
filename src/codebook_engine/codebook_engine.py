@@ -97,11 +97,13 @@ class CodebookEngine:
     def load_model(self, source):
         with open(source, 'r') as json_file:
             i = json.load(json_file)
+            self.alpha = i['alpha']
+            self.beta = i['beta']
             self.data = []
             for y in range(0, int(i['height'])-1):
                 temp = []
                 for x in range(0, int(i['width'])-1):
-                    cb = Codebook()
+                    cb = Codebook(alpha=self.alpha, beta=self.beta)
                     temp.append(cb)
                 self.data.append(temp)
             for y in range(0, int(i['height'])-1):

@@ -3,7 +3,7 @@ import math
 
 class Codebook(object):
 
-    def __init__(self, alpha=0.7, beta=1.1):
+    def __init__(self, alpha, beta):
         self.codewords = []
         self.alpha = alpha
         self.beta = beta

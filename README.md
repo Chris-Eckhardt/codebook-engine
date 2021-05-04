@@ -3,11 +3,10 @@
 
 to run this program follow these steps:
 
-create a folder inside the root directory of this project (codebook-engine) 
-    call it 'assets'
-    add the test video files into this directory
 
-(optional) create a python virtual environment and activate it
+add the test video files into the assets folder, also please remove all spaces from the file name.
+
+create a python virtual environment and activate it
     and install dependencies with 'pip3 install -r requirements.txt'
 
 else

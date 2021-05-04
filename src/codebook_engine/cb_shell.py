@@ -39,19 +39,26 @@ class CbShell(object):
 
     def execute(self, exe):
         if exe.cmd == 'train':
-            cbe = CodebookEngine()
-            cbe.init_frame_manager(source=self.path_to_assets+exe.source, alpha=exe.alpha, beta=exe.beta)
-            cbe.init_codebooks()
-            cbe.build_codebooks()
-            cbe.clean_lambdas()
-            cbe.temporal_filtering()
-            # cbe.count_non_singltons() # for debug
-            cbe.save_model(name=self.path_to_models+exe.name)
+            try:
+                cbe = CodebookEngine()
+                cbe.init_frame_manager(source=self.path_to_assets+exe.source, alpha=exe.alpha, beta=exe.beta)
+                cbe.init_codebooks()
+                cbe.build_codebooks()
+                cbe.clean_lambdas()
+                cbe.temporal_filtering()
+                # cbe.count_non_singltons() # for debug
+                cbe.save_model(name=self.path_to_models+exe.name)
+            except:
+                print("An error occurred. Please check that the arguments provided are correct.")
+
         elif exe.cmd == 'separate':
-            cbe = CodebookEngine()
-            cbe.init_frame_manager(source=self.path_to_assets+exe.source, alpha=exe.alpha, beta=exe.beta)
-            cbe.load_model(source=self.path_to_models+exe.model)
-            cbe.build_output_file(source=exe.source, out=self.path_to_output+exe.out)
+            try:
+                cbe = CodebookEngine()
+                cbe.init_frame_manager(source=self.path_to_assets+exe.source, alpha=exe.alpha, beta=exe.beta)
+                cbe.load_model(source=self.path_to_models+exe.model)
+                cbe.build_output_file(source=exe.source, out=self.path_to_output+exe.out)
+            except:
+                print("An error occurred. Please check that the arguments provided are correct.")
 
     def build_training_exe(self, li):
         index = 1
