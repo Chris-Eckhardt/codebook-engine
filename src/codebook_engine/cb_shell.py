@@ -154,7 +154,7 @@ class CbShell(object):
         print('             List all commands and their arguments.')
         print('\n     `exit`\n')
         print('         Description:')
-        print('             Exit the program.')
+        print('             Exit the program.\n\n')
 
 
 class RunConfig(object):

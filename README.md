@@ -1,5 +1,6 @@
 # codebook-engine
 
+separate --source sample2.MOV --model rev_a0.7_b1.2.json --out
 
 to run this program follow these steps:
 

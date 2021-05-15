@@ -34,8 +34,15 @@ class Codeword:
 
     def __repr__(self):
         return '({},{},{})-({},{},{},{},{},{})'.format(
-            self.red(), self.green(), self.blue(), self.min_brightness(), self.max_brightness(),
-            self.freq(), self.lam(), self.first_access(), self.last_access())
+                self.red(), 
+                self.green(), 
+                self.blue(), 
+                self.min_brightness(), 
+                self.max_brightness(),
+                self.freq(), 
+                self.lam(), 
+                self.first_access(), 
+                self.last_access())
 
     def is_within(self, I):
         if self._max_brightness >= I >= self._min_brightness:
