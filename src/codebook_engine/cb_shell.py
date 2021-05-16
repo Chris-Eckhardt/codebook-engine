@@ -156,6 +156,10 @@ class CbShell(object):
         print('         Description:')
         print('             Exit the program.\n\n')
 
+###############################################################
+#  RunConfig object class:
+#
+###############################################################
 
 class RunConfig(object):
 

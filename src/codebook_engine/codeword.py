@@ -13,6 +13,13 @@ class Codeword:
     _first_access = None
     _last_access = None
 
+    ###############################################################
+    #  constructor:
+    #
+    #  if a rep parameter is provided, 
+    #   construct a codeword from the data in that string
+    ###############################################################
+
     def __init__(self, rep=''):
         if rep != '':
             two = rep.split('-')
@@ -32,6 +39,11 @@ class Codeword:
             self._first_access = int(spec[4])
             self._last_access = int(spec[5])
 
+    ###############################################################
+    #  use: this is the string representation that will be saved 
+    #   in a json format
+    ###############################################################
+
     def __repr__(self):
         return '({},{},{})-({},{},{},{},{},{})'.format(
                 self.red(), 
@@ -44,13 +56,20 @@ class Codeword:
                 self.first_access(), 
                 self.last_access())
 
+    ###############################################################
+    #  is_within:
+    #
+    #  params: I (a value of brightness)
+    #  returns: return true if the value I is within
+    #   this codewords decision boundary 
+    #   (i min * alpha <= I <= i max * beta)
+    ###############################################################
+
     def is_within(self, I):
         if self._max_brightness >= I >= self._min_brightness:
             return True
         else:
             return False
-
-
 
     ########################################
     #         GETTERS AND SETTERS          #

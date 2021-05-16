@@ -6,6 +6,10 @@ from codebook_engine.codebook import Codebook
 from codebook_engine.model import Model
 from codebook_engine.codeword import Codeword
 
+###############################################################
+#  CodebookEngine:
+#
+###############################################################
 
 class CodebookEngine:
 
@@ -19,12 +23,22 @@ class CodebookEngine:
     def __init__(self):
         pass
 
+    ###############################################################
+    #  init_frame_manager:
+    #
+    ###############################################################
+
     def init_frame_manager(self, source, alpha=0.7, beta=1.1):
         if source != '':
             self.fm = FrameManager(source)
         self.mnrl_threshold = self.fm.num_of_frames / 2
         self.alpha = alpha # between 0.4 and 0.7
         self.beta = beta # between 1.1 and 1.5
+
+    ###############################################################
+    #  init_codebooks:
+    #
+    ###############################################################
 
     def init_codebooks(self):
         for y in range(0, self.fm.frame_height):
@@ -34,6 +48,11 @@ class CodebookEngine:
             self.data.append(temp)
         self.fm.reset()
         print(' * codebooks initialized with size {}, {}'.format(len(self.data[0]), len(self.data)))
+
+    ###############################################################
+    #  build_codebooks:
+    #
+    ###############################################################
 
     def build_codebooks(self):
         t = 1
@@ -47,6 +66,11 @@ class CodebookEngine:
         self.fm.reset()
         print(' * built codebooks')
 
+    ###############################################################
+    #  clean_lambdas:
+    #
+    ###############################################################
+
     def clean_lambdas(self):
         for y in range(0, self.fm.frame_height-1):
             for x in range(0, self.fm.frame_width-1):
@@ -54,6 +78,11 @@ class CodebookEngine:
                 for cw in cb.codewords:
                     cw.lam( max( cw.lam(), (self.fm.num_of_frames-cw.first_access()+cw.last_access()-1) ) )
         print(' * cleaned lambdas')
+
+    ###############################################################
+    #  temporal_filtering:
+    #
+    ###############################################################
 
     def temporal_filtering(self):
         for y in range(0, self.fm.frame_height-1):
@@ -64,6 +93,11 @@ class CodebookEngine:
                         cw_list.remove(cw)
         print(' * temporal filtering complete')
 
+    ###############################################################
+    #  count_non_singltons:
+    #
+    ###############################################################
+
     def count_non_singltons(self):
         i = 0
         for y in range(0, self.fm.frame_height-1):
@@ -73,6 +107,11 @@ class CodebookEngine:
                     i += 1
         print('i:{}'.format(i))
 
+    ###############################################################
+    #  save_model:
+    #
+    ###############################################################
+
     def save_model(self, name):
         data = self.convert_data()
         model = Model(name=name,alpha=self.alpha, beta=self.beta, height=self.fm.frame_height, width=self.fm.frame_width, data=data)
@@ -80,6 +119,11 @@ class CodebookEngine:
         with open( '{}.json'.format(name), 'w') as fd:
             fd.write(j_model)
         print(' * model [{}.json] was successfully created.'.format(name))
+
+    ###############################################################
+    #  convert_data:
+    #
+    ###############################################################
 
     def convert_data(self):
         a = []
@@ -93,6 +137,11 @@ class CodebookEngine:
                 b.append(c)
             a.append(b)
         return a
+
+    ###############################################################
+    #  load_model:
+    #
+    ###############################################################
 
     def load_model(self, source):
         with open(source, 'r') as json_file:
@@ -112,6 +161,11 @@ class CodebookEngine:
                     for v in i['data'][y][x]:
                         cb.codewords.append(Codeword(v))
         print(' * model loaded : {}'.format(source))
+
+    ###############################################################
+    #  build_output_file:
+    #
+    ###############################################################
                         
     def build_output_file(self, source='', out=''):
         t = 1
