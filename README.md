@@ -40,14 +40,30 @@ NOTE: the data I provided to you are the exact same video files you provided, I 
 ## Run the program
 run the program with the following command:
     `python3 src/main.py`
+a shell cursor should appear 
+`>>`
 
 ## Train a model
+use the `train` command to create a model. Pass the following parameters with it 
+`--source` (the source video file), 
+`--name` (the desired name of the model it will create), 
+`--alpha`, 
+`--beta`
+
+### Example train command
+`train --source sample1.MOV --name modelName --alpha 0.8 --beta 1.2`
 
 ## Perform a background subtraction
+use the `separate` command to use a model and build an output file.
+`--source` (the video file to use against the model),
+`--model` (the model that will be used),
+`--out` (the desired name of the output file)
 
-### Example separate command:
-`separate --source sample2.MOV --model rev_a0.7_b1.2.json --out`
+### Example separate command
+`separate --source sample2.MOV --model modelName.json --out outputName`
 
 ## Models
+Models are located in the output file and are in json format. They can be opened and read, however they will be fairly large files.
 
 ## Output files
+Output files are going to be in `.avi` format and will be located in the `output/` directory.
