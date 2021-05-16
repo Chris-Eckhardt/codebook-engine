@@ -96,6 +96,8 @@ class CodebookEngine:
     ###############################################################
     #  count_non_singltons:
     #
+    # use: this function is only used for debug, 
+    #   it has no other perpose
     ###############################################################
 
     def count_non_singltons(self):

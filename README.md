@@ -8,11 +8,23 @@ All commands are linux specific and may not work on powershell or other types of
 install python3, venv, and pip using the following command:
     `sudo apt install python3 python3-pip python3-venv`
 
+# Navigate to the project directory
+You should now navigate to the root folder of the project 
+    called `codebook-engine`
+    this folder should contain the following
+        `assets/`
+        `models/`
+        `output/`
+        `src/`
+        `.gitignore`
+        `README.md`
+        `requirements.txt`
+
 # Create a python virtual environment, activate it, and install dependencies
-Create a virtual environment (called venv, or use your own name) with the following command:
-    `python3 -m venv venv` or `python3 -m venv [name]`
+Create a virtual environment (called venv) with the following command:
+    `python3 -m venv venv`
 Activate the virtual environment using the following command:
-    `source venv/bin/activate` or `source [name]/bin/activate`
+    `source venv/bin/activate`
 Install project dependencies using the following command:
     `pip install -r requirements.txt`
 
@@ -22,7 +34,7 @@ Please move the required data into the directory
 If the video filename contains spaces, please rename the file to something without spaces.
 My program can't handle them and it was not a high enough prority for me to address that problem.
 
-Note: the data I provided to you are the exact same video files you provided, I just renamed them.
+NOTE: the data I provided to you are the exact same video files you provided, I just renamed them.
 
 
 # Run the program
