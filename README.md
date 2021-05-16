@@ -45,7 +45,7 @@ run the program with the following command:
 
 ## Perform a background subtraction
 
-## Example separate command:
+### Example separate command:
 `separate --source sample2.MOV --model rev_a0.7_b1.2.json --out`
 
 ## Models
