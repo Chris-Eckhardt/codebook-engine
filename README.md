@@ -1,4 +1,4 @@
-# codebook-engine
+# CODEBOOK-ENGINE
 
 ## Overview and a few notes
 This program was built and run on windows using the linux subsystem as a shell. 
