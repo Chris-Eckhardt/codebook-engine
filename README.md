@@ -12,13 +12,13 @@ install python3, venv, and pip using the following command:
 You should now navigate to the root folder of the project 
     called `codebook-engine`
     this folder should contain the following
-       - `assets/`
-       - `models/`
-       - `output/`
-       - `src/`
-       - `.gitignore`
-       - `README.md`
-       - `requirements.txt`
+       * `assets/`
+       * `models/`
+       * `output/`
+       * `src/`
+       * `.gitignore`
+       * `README.md`
+       * `requirements.txt`
 
 ## Create a python virtual environment, activate it, and install dependencies
 Create a virtual environment (called venv) with the following command:
