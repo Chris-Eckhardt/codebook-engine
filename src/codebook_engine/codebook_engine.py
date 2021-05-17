@@ -26,6 +26,9 @@ class CodebookEngine:
     ###############################################################
     #  init_frame_manager:
     #
+    #  params: source (name of file to be used),
+    #   alpha, beta
+    #  return: none
     ###############################################################
 
     def init_frame_manager(self, source, alpha=0.7, beta=1.1):
@@ -38,6 +41,8 @@ class CodebookEngine:
     ###############################################################
     #  init_codebooks:
     #
+    # params: none
+    # return: none
     ###############################################################
 
     def init_codebooks(self):
@@ -52,6 +57,8 @@ class CodebookEngine:
     ###############################################################
     #  build_codebooks:
     #
+    #  params: none
+    #  return: none
     ###############################################################
 
     def build_codebooks(self):
@@ -69,6 +76,8 @@ class CodebookEngine:
     ###############################################################
     #  clean_lambdas:
     #
+    #  params: none
+    #  return: none
     ###############################################################
 
     def clean_lambdas(self):
@@ -82,6 +91,8 @@ class CodebookEngine:
     ###############################################################
     #  temporal_filtering:
     #
+    #  params: none
+    #  return: none
     ###############################################################
 
     def temporal_filtering(self):
@@ -112,6 +123,8 @@ class CodebookEngine:
     ###############################################################
     #  save_model:
     #
+    #  params: name (name of model to be written)
+    #  return: none
     ###############################################################
 
     def save_model(self, name):
@@ -125,6 +138,8 @@ class CodebookEngine:
     ###############################################################
     #  convert_data:
     #
+    #  params: none
+    #  return: matrix of codebooks represented as list of strings
     ###############################################################
 
     def convert_data(self):
@@ -143,6 +158,8 @@ class CodebookEngine:
     ###############################################################
     #  load_model:
     #
+    #  params: source (name of model file)
+    #  return: none
     ###############################################################
 
     def load_model(self, source):
@@ -167,6 +184,9 @@ class CodebookEngine:
     ###############################################################
     #  build_output_file:
     #
+    #  params: source (not used, needs to be removed),
+    #   out (name of output file to be written to memory)
+    #  return: none
     ###############################################################
                         
     def build_output_file(self, source='', out=''):

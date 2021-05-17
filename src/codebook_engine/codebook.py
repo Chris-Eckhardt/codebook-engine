@@ -40,9 +40,9 @@ class Codebook(object):
         g = pow(int(pixel[1]), 2)
         b = pow(int(pixel[2]), 2)
         brightness = math.sqrt(r + g + b)
-        min = int(cw.min_brightness() * self.alpha)
-        max = int(cw.max_brightness() * self.beta)
-        if min <= brightness <= max:
+        mini = int(cw.min_brightness() * self.alpha)
+        maxi = int(cw.max_brightness() * self.beta)
+        if mini <= brightness <= maxi:
             return True
         else:
             return False
